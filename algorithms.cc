@@ -49,3 +49,27 @@ std::vector <std::vector <int> > combinations(const std::vector <int>& iterable,
 	i_combinations(iterable, r, res, partial_res, -1);
 	return res;
 }
+
+void i_combinations_map(const std::map <int, std::vector<double> >& iterable, int r, std::vector < std::vector<std::pair<int, std::vector<double> > > > & res, std::vector<std::pair<int, std::vector<double> > > partial_res, int index){
+	if(r == 0){
+		res.push_back(partial_res);
+		return;
+	}
+	int i = 0;
+	for(auto w : iterable){
+		if(i >= index + 1){
+			partial_res.push_back(std::make_pair(w.first, w.second));
+			i_combinations_map(iterable, r-1, res, partial_res, i);
+			partial_res.pop_back();
+		}
+		++i;
+	}
+}
+
+std::vector < std::vector<std::pair<int, std::vector<double> > > > combinations_map(const std::map <int, std::vector<double> >& iterable, int r){
+	r = (r == 0) ? iterable.size() : r;
+	std::vector < std::vector<std::pair<int, std::vector<double> > > > res;
+	std::vector<std::pair<int, std::vector<double> > > partial_res;
+	i_combinations_map(iterable, r, res, partial_res, -1);
+	return res;
+}
