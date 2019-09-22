@@ -1,4 +1,3 @@
-
 #include "random_graphs.hh"
 
 using graph = std::vector < std::vector <int> >;
