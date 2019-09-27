@@ -21,8 +21,6 @@ graph erdos_renyi_random_graph(int n, double p, bool directed){
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
 
-	srand(time(0));
-
 
 	for(int i = 0; i < edges.size(); ++i){
 		if((rand()%100/(double)100) < p){
@@ -50,7 +48,6 @@ graph random_geometric_graph(int n, double radius, int dim, double p){
 	graph G(n);
 	std::map <int, std::vector <double>> pos;
 
-	srand(time(0));
 	for(int i = 0; i < n; ++i){
 		std::vector <double> pos_aux;
 		for(int j = 0; j < dim; ++j) pos_aux.push_back((rand()%100/(double)100));
