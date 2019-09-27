@@ -100,11 +100,11 @@ void get_Statistical_test_data(bool ermon) {
 	int k = 0;
 	for (int i = 10; i <= 100; i=i+10) {
 		for (float j = 0.0; j < 1; j += 0.1) {
-			for (float k = 0.01; k < 0.9; k += 0.1) {
+			for (float k = 0.01; k < 0.09; k += 0.01) {
 				Statistic_test(i, j+k, false, ermon);
 				cout << " ";
 			}
-			Statistic_test(i, j + 0.9, false, ermon);
+			Statistic_test(i, j + 0.09, false, ermon);
 			cout << endl;
 		}
 		cout << endl;
