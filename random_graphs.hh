@@ -4,6 +4,8 @@
 #include "algorithms.hh"
 #include "random.hh"
 
+static Random_generator rnd;
+
 using graph = std::vector < std::vector <int> >;
 
 graph complete_graph(int n);
