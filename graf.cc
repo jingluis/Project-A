@@ -62,7 +62,7 @@ void RGG_test () {
 	cin >> numVert >> radius;
 	graph g_test;
 	g_test = random_geometric_graph(numVert, radius);
-	cout << "\n\nAdjacency Matrix\n\n";
+	cout << "\n\nAdjacency list\n\n";
 	for (vector<int> v : g_test) {
 		for (int i : v) {
 			cout << i << " ";
