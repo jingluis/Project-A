@@ -1,5 +1,12 @@
-graf : graf.cc algorithms.cc random_graphs.cc
-	g++ -o graf graf.cc random_graphs.cc algorithms.cc -I.
+CC=g++
+CCFLAGS=-std=c++11
+CCRUN=-O3
+
+SRC=graf.cc algorithms.cc random_graphs.cc random.cc
+OUT=graf
+OBJ=graf.o
+all:
+	$(CC) $(CCRUN) $(CCFLAGS) $(SRC) -o $(OUT)
 
 clean :
-	rm -f *.o
+	rm -f *.o $(OUT)

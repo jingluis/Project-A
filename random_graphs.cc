@@ -50,7 +50,7 @@ graph random_geometric_graph(int n, double radius, int dim, double p){
 	Random_generator rnd;
 	for(int i = 0; i < n; ++i){
 		std::vector <double> pos_aux;
-		for(int j = 0; j < dim; ++j) pos_aux.push_back(rnd.double_rand());
+		for(int j = 0; j < dim; ++j) pos_aux.push_back(rnd.random_double());
 		pos[i] = pos_aux;
 	}
 	std::map <int, std::vector<double>>::iterator it;
