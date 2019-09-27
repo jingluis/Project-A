@@ -62,7 +62,7 @@ void RGG_test () {
 	cin >> numVert >> radius;
 	graph g_test;
 	g_test = random_geometric_graph(numVert, radius);
-	cout << "\n\nAdjacency list\n\n";
+	cout << "\n\nAdjacency Matrix\n\n";
 	for (vector<int> v : g_test) {
 		for (int i : v) {
 			cout << i << " ";
@@ -79,8 +79,42 @@ void RGG_test () {
 	cout << endl;
 }
 
-int main () {
-	while (true) {
-		GNP_test();
+void Statistic_test(int numVert, float p, bool directed, bool ermon) {
+	int connexed, connexed_components;
+	connexed = connexed_components = 0;
+	for (int i = 0; i < 100; ++i) {
+		graph g_test;
+		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, directed);
+		else g_test = random_geometric_graph(numVert, p);
+		graph component;
+		connex_components(g_test, component);
+		connexed_components += component.size();
+		connexed += (component.size() == 1);
 	}
+	/*cout << "El graf aleatori generat amb " << numVert << " vertexs i amb una p = " << p << " te en mitjana:\n";
+	cout <<	"possibilitat de ser conex = " << float(connexed)/100.0 << "\ncomponents conexos esperat = " << float(connexed_components)/100.0 << "\n\n";*/
+	cout <<  float(connexed)/100.0;
+}
+
+void get_Statistical_test_data(bool ermon) {
+	int k = 0;
+	for (int i = 10; i <= 100; i=i+10) {
+		for (float j = 0.0; j < 1; j += 0.1) {
+			for (float k = 0.01; k < 0.9; k += 0.1) {
+				Statistic_test(i, j+k, false, ermon);
+				cout << " ";
+			}
+			Statistic_test(i, j + 0.9, false, ermon);
+			cout << endl;
+		}
+		cout << endl;
+	}
+}
+
+
+int main () {
+	srand(time(0));
+	bool ermon;
+	cin >> ermon;
+	get_Statistical_test_data(ermon);
 }
