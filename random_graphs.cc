@@ -21,8 +21,9 @@ graph erdos_renyi_random_graph(int n, double p, bool directed){
 	graph res(n);
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
+	Random_generator rnd;
 	for(int i = 0; i < edges.size(); ++i){
-		if(doubleRand() < p){
+		if(rnd.random_double() < p){
 			res[edges[i][0]].push_back(edges[i][1]);
 			if(not directed) res[edges[i][1]].push_back(edges[i][0]);
 		}
@@ -46,9 +47,10 @@ graph random_geometric_graph(int n, double radius, int dim, double p){
 	int n_name = n;
 	graph G(n);
 	std::map <int, std::vector <double>> pos;
+	Random_generator rnd;
 	for(int i = 0; i < n; ++i){
 		std::vector <double> pos_aux;
-		for(int j = 0; j < dim; ++j) pos_aux.push_back(doubleRand());
+		for(int j = 0; j < dim; ++j) pos_aux.push_back(rnd.double_rand());
 		pos[i] = pos_aux;
 	}
 	std::map <int, std::vector<double>>::iterator it;

@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "algorithms.hh"
+#include "random.hh"
 
 using graph = std::vector < std::vector <int> >;
 
