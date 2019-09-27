@@ -1,9 +1,6 @@
 #include "algorithms.hh"
 
 
-double doubleRand() {
-  return double(rand()) / (double(RAND_MAX) + 1.0);
-}
 
 void i_permutations(const std::vector <int>& iterable, int r, std::vector <std::vector <int> >& res, std::vector <int>& partial_res, std::vector <bool>& visited){
 	if(r == 0){
