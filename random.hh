@@ -41,11 +41,15 @@ class Random_generator {
 public:
 
   /**
-   * Returns a random integer in [l..u]. u - l + 1 must be between 1 and 10^6.
+   * Returns a real random number in [0, 1).
    */
   double random_double(){
     return uniform();
   }
+
+  /**
+   * Returns a random integer in [l..u]. u - l + 1 must be between 1 and 10^6.
+   */
   int random (int l, int u) {
     if (l > u) return l; // wrong interval
 
