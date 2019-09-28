@@ -1,7 +1,7 @@
 #include "random_graphs.hh"
 
 
-int test_value = {10,50,100,250,500,1000};
+int test_value[] = {10,50,100,250,500,1000};
 
 
 void depth_first_search(int i, vector<bool>& visited, vector<int>& partial_res, const graph& g){
