@@ -103,6 +103,29 @@ void RGG_test () {
 	cout << endl;
 }
 
+
+/*
+	Returns true if the probability of a G = (V,E) with numVert vertex and numEdge edge being connected with probability p is 1 with 100 tests, false otherwise
+	Pre: numVert > 0, 0 <= numEdge <= numVert*(numVert-1)/2, 0.0 <= p <= 1.0, directed indicates whether the graph will be directed or not, ermon indicates if the graph is gnp or rgg,
+			 res stores the probability.
+*/
+bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool directed, bool ermon, float& res) {
+	int connexed;
+	connexed = 0;
+	for (int i = 0; i < 100; ++i) {
+		graph g_test;
+		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, directed, true, numEdge);
+		else g_test = random_geometric_graph(numVert, p, 2, 2.0, true, numEdge);
+		vector<int> partial_res;
+		vector<bool> visited(numVert, false);
+		depth_first_search(0,visited, partial_res, g_test);
+		connexed += numVert == partial_res.size();
+	}
+	res = float(connexed)/100.0;
+	if (res == 1) return true;
+	return false;
+}
+
 /*
 	Returns true if the probability of a G = (V,E) with numVert vertex being connected with probability p is 1 with 100 tests, false otherwise
 	Pre: numVert > 0, 0.0 <= p <= 1.0, directed indicates whether the graph will be directed or not, ermon indicates if the graph is gnp or rgg,
@@ -156,6 +179,33 @@ void get_statistic_data_file(bool ermon, int opt){
 	}
 }
 
+/* 
+	 stores the result in files of the statistic tests for graphs with 10 - 100 vertexs, increasing 10 vertexs per loop
+	 ermon indicates if the graph is gnp or rgg
+	 Returns the relation beetwen the size of the random generated graph and it's conectivity
+*/
+
+
+void get_statistic_Edges_Connexed_file(bool ermon) {
+	for (int i = 10; i <= 100; i += 10) {
+		int max_Edge_number = (i*(i-1))/2;
+		for (float j = 0.1f; j < 1.1f; j += 0.1f) {
+			bool b = false;
+			string file =  to_string(i) + " with p = " + to_string(j) + ".txt";
+			ofstream output(file);
+			for (int k = 0; k <= max_Edge_number; ++k) {
+				output << k << " ";
+				float res;
+				if (not b) {
+					b = Statistic_Edges_Connexed(i, k, j, false, ermon, res);
+					output << res;
+				}
+				else output << 1;
+				output << endl;
+			}
+		}
+	}
+}
 
 
 int main () {
@@ -186,9 +236,11 @@ int main () {
 				cout << "Please choose which kind of statistic test you want to obtain" << endl;
 				cout << "1) probability of the graph being connected" << endl;
 				cout << "2) number of waiting connected components of a graph" << endl;
+				cout << "3) relationship beetwen number of edges and connectivity" << endl;
 				int i;
 				cin >> i;
-				get_statistic_data_file(b, i);
+				if(i == 3) get_statistic_Edges_Connexed_file(b);
+				else get_statistic_data_file(b, i);
 				cout << "Statistic data collected correctly" << endl;
 				break;
 		}
