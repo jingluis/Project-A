@@ -140,7 +140,6 @@ void statistic_aux(bool ermon){
 }
 
 void statistic_aux_file(bool ermon){
-	
 	for(int n = 10; n <= 100; n += 10){
 		bool b = false;
 		string file =  std::to_string(n) + ".txt";
