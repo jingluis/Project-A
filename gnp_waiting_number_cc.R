@@ -13,11 +13,11 @@ for (val in list_of_files){
   dades <- read.table(result)
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
-  if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 6, lwd = 2,col = colors()[value],ylab = "Waiting number of Connected Components", xlab = "Transmission Probability P")
-  lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
+  if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 6,lwd = 2,col = colors()[value],ylab = "Waiting number of Connected Components", xlab = "Transmission Probability P")
+  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
   i = i+1
-
 }
 
 
 legend("bottomright", legend = leg, col = colo, lty = 2, cex = 1)
+
