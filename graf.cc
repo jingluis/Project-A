@@ -58,7 +58,7 @@ void GNP_test () {
 		}
 		cout << endl;
 	}
-	cout << "\n\nConnected Component\n\n";
+	cout << "\n\nConnected Components\n\n";
 	graph component;
 	connex_components(g_test, component);
 	i = 0; 
@@ -90,7 +90,7 @@ void RGG_test () {
 		}
 		cout << endl;
 	}
-	cout << "\n\nConnected Component\n\n";
+	cout << "\n\nConnected Components\n\n";
 	graph component;
 	connex_components(g_test, component);
 	i = 0; 
