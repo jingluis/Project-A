@@ -187,6 +187,7 @@ void get_statistic_data_file(bool ermon, int opt){
 
 
 void get_statistic_Edges_Connexed_file(bool ermon) {
+	
 	for (int i = 10; i <= 100; i += 10) {
 		int max_Edge_number = (i*(i-1))/2;
 		for (float j = 0.1f; j < 1.1f; j += 0.1f) {

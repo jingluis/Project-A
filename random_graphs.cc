@@ -44,7 +44,6 @@ graph complete_graph(int n){
 graph erdos_renyi_random_graph(int n, double p, bool directed, bool edge_fixed, int Edges){
 	vector < vector<int> > edges;
 	vector <int> vertex(n);
-	int added_edge = 0;
 	for(int i = 0; i < n; ++i) vertex[i] = i;
 	if(directed) edges = permutations(vertex, 2);
 	else edges = combinations(vertex, 2);
@@ -52,12 +51,25 @@ graph erdos_renyi_random_graph(int n, double p, bool directed, bool edge_fixed, 
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
 
+	if (!edge_fixed) {
+		for(int i = 0; i < edges.size(); ++i){
+			if((rand()%100/(double)100) < p){
+				res[edges[i][0]].push_back(edges[i][1]);
+				if(not directed) res[edges[i][1]].push_back(edges[i][0]);
+			}
+		}
+	}
 
-	for(int i = 0; i < edges.size() and added_edge <= Edges; ++i){
-		if((rand()%100/(double)100) < p){
-			added_edge += edge_fixed;
-			res[edges[i][0]].push_back(edges[i][1]);
-			if(not directed) res[edges[i][1]].push_back(edges[i][0]);
+	else {
+		int added_edge = 0;
+		vector<bool> added(edges.size(), false);
+		for (int i = 0; added_edge < Edges; i = (i+1)%edges.size()) {
+			if (!added[i] and (rand()%100/(double)100) < p) {
+				++added_edge;
+				res[edges[i][0]].push_back(edges[i][1]);
+				if(not directed) res[edges[i][1]].push_back(edges[i][0]);
+				added[i] = true;
+			}
 		}
 	}
 	return res;
@@ -71,14 +83,30 @@ graph erdos_renyi_random_graph(int n, double p, bool directed, bool edge_fixed, 
 */
 void slow_edges(graph& G,const map <int, vector<double>>& pos, double radius, double p, int dim, bool edge_fixed, int Edges){
 	auto combi = combinations_map(pos,2);
-	int added_edge = 0;
-	for(int i = 0; i < combi.size() and added_edge <= Edges; ++i){
-		double sum = 0.0;
-		for(int j = 0; j < dim; ++j) sum += pow(abs(combi[i][0].second[j]-combi[i][1].second[j]), p);
-		if(sum <= pow(radius, p)){
-			added_edge += edge_fixed;
-			G[combi[i][0].first].push_back(combi[i][1].first);
-			G[combi[i][1].first].push_back(combi[i][0].first);
+	if (!edge_fixed) {
+		for(int i = 0; i < combi.size(); ++i){
+			double sum = 0.0;
+			for(int j = 0; j < dim; ++j) sum += pow(abs(combi[i][0].second[j]-combi[i][1].second[j]), p);
+			if(sum <= pow(radius, p)){
+				G[combi[i][0].first].push_back(combi[i][1].first);
+				G[combi[i][1].first].push_back(combi[i][0].first);
+			}
+		}
+	}
+	else {
+		int added_edge = 0;
+		vector<bool> added(combi.size(), false);
+		for(int i = 0; added_edge < Edges; i = (i+1)%combi.size()){
+			if (!added[i]) {
+				double sum = 0.0;
+				for(int j = 0; j < dim; ++j) sum += pow(abs(combi[i][0].second[j]-combi[i][1].second[j]), p);
+				if(sum <= pow(radius, p)){
+					added_edge += edge_fixed;
+					G[combi[i][0].first].push_back(combi[i][1].first);
+					G[combi[i][1].first].push_back(combi[i][0].first);
+					added[i] = true;
+				}
+			}
 		}
 	}
 } 
