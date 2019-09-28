@@ -81,7 +81,7 @@ for (val in 10:1){
   dades <- read.table(result)
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
-  if(i == 0) plot(main = "N = 500",dades$V1,dades$V2,type = "l",lty = 2, ylim = c(0,1.0),lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Number of edges")
+  if(i == 0) plot(main = "N = 250",dades$V1,dades$V2,type = "l",lty = 2, ylim = c(0,1.0),lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Number of edges")
   
   else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
   i = i+1
@@ -102,7 +102,7 @@ for (val in 10:1){
   dades <- read.table(result)
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
-  if(i == 0) plot(main = "N = 1000",dades$V1,dades$V2,type = "l",lty = 2, ylim = c(0,1.0),lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Number of edges")
+  if(i == 0) plot(main = "N = 500",dades$V1,dades$V2,type = "l",lty = 2, ylim = c(0,1.0),lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Number of edges")
   
   else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
   i = i+1
@@ -124,7 +124,7 @@ for (val in 10:1){
   dades <- read.table(result)
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
-  if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2, ylim = c(0,1.0),lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Number of edges")
+  if(i == 0) plot(main = "N = 1000",dades$V1,dades$V2,type = "l",lty = 2, ylim = c(0,1.0),lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Number of edges")
   
   else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
   i = i+1
