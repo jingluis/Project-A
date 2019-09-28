@@ -1,6 +1,6 @@
 #include "random_graphs.hh"
 
-
+int test_value[] = {10,50,100,250,500,1000};
 
 
 
@@ -137,7 +137,7 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res,
 */	 
 
 void get_statistic_data_file(bool ermon, int opt){
-	for(int n = 10; n <= 100; n += 10){
+	for(int n = 0; n < 6; ++n){
 		bool b = false;
 		string file =  to_string(n) + ".txt";
 		ofstream output(file);
@@ -146,7 +146,7 @@ void get_statistic_data_file(bool ermon, int opt){
 			float res;
 			float connect_c;
 			if(not b){
-				b = Statistic_test(n, i, false, ermon,res, connect_c);
+				b = Statistic_test(test_value[n], i, false, ermon,res, connect_c);
 				if(opt == 1) output << res;
 				else output << connect_c;
 			}
