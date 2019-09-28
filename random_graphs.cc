@@ -37,8 +37,8 @@ graph complete_graph(int n){
 */
 
 graph erdos_renyi_random_graph(int n, double p, bool directed){
-	std::vector < std::vector<int> > edges;
-	std::vector <int> vertex(n);
+	vector < vector<int> > edges;
+	vector <int> vertex(n);
 	for(int i = 0; i < n; ++i) vertex[i] = i;
 	if(directed) edges = permutations(vertex, 2);
 	else edges = combinations(vertex, 2);
@@ -61,7 +61,7 @@ graph erdos_renyi_random_graph(int n, double p, bool directed){
   using Minkowski distance metric 'p'
   Works 'O(n^2)' time
 */
-void slow_edges(graph& G,const std::map <int, std::vector<double>>& pos, double radius, double p, int dim){
+void slow_edges(graph& G,const map <int, vector<double>>& pos, double radius, double p, int dim){
 	auto combi = combinations_map(pos,2);
 	for(int i = 0; i < combi.size(); ++i){
 		double sum = 0.0;
@@ -104,14 +104,14 @@ void slow_edges(graph& G,const std::map <int, std::vector<double>>& pos, double 
 graph random_geometric_graph(int n, double radius, int dim, double p){
 	int n_name = n;
 	graph G(n);
-	std::map <int, std::vector <double>> pos;
+	map <int, vector <double>> pos;
 
 	for(int i = 0; i < n; ++i){
-		std::vector <double> pos_aux;
+		vector <double> pos_aux;
 		for(int j = 0; j < dim; ++j) pos_aux.push_back((rand()%100/(double)100));
 		pos[i] = pos_aux;
 	}
-	std::map <int, std::vector<double>>::iterator it;
+	map <int, vector<double>>::iterator it;
 	slow_edges(G, pos, radius, p, dim);
 	return G;
 }

@@ -2,7 +2,7 @@
 
 
 
-void i_permutations(const std::vector <int>& iterable, int r, std::vector <std::vector <int> >& res, std::vector <int>& partial_res, std::vector <bool>& visited){
+void i_permutations(const vector <int>& iterable, int r, vector <vector <int> >& res, vector <int>& partial_res, vector <bool>& visited){
 	if(r == 0){
 		res.push_back(partial_res);
 		return;
@@ -23,16 +23,16 @@ Return successive r length permutations of elements in the iterable.
 Pre: 	vector iterable has no repeted elements, r should be either 0 or less than iterable.size()
 Post:	returns a vector of vector which each line corresponds of the r elements of the permutation, without repeatings.
 */
-std::vector <std::vector <int> > permutations(const std::vector <int>& iterable, int r){
+vector <vector <int> > permutations(const vector <int>& iterable, int r){
 	r = (r == 0) ? iterable.size() : r;
-	std::vector <std::vector <int> > res;
-	std::vector <int> partial_res;
-	std::vector <bool> visited(iterable.size(), false);
+	vector <vector <int> > res;
+	vector <int> partial_res;
+	vector <bool> visited(iterable.size(), false);
 	i_permutations(iterable, r, res, partial_res, visited);
 	return res;
 }
 
-void i_combinations(const std::vector <int>& iterable, int r, std::vector <std::vector <int> >& res, std::vector <int>& partial_res, int index){
+void i_combinations(const vector <int>& iterable, int r, vector <vector <int> >& res, vector <int>& partial_res, int index){
 	if(r == 0){
 		res.push_back(partial_res);
 		return;
@@ -49,15 +49,15 @@ Return r length subsequences of elements from the input iterable.
 Pre: 	vector iterable has no repeted elements, r should be either 0 or less than iterable.size()
 Post:	returns a vector of vector which each line corresponds of the r elements of the combination, without repeatings.
 */
-std::vector <std::vector <int> > combinations(const std::vector <int>& iterable, int r){
+vector <vector <int> > combinations(const vector <int>& iterable, int r){
 	r = (r == 0) ? iterable.size() : r;
-	std::vector <std::vector <int> > res;
-	std::vector <int> partial_res;
+	vector <vector <int> > res;
+	vector <int> partial_res;
 	i_combinations(iterable, r, res, partial_res, -1);
 	return res;
 }
 
-void i_combinations_map(const std::map <int, std::vector<double> >& iterable, int r, std::vector < std::vector<std::pair<int, std::vector<double> > > > & res, std::vector<std::pair<int, std::vector<double> > > partial_res, int index){
+void i_combinations_map(const map <int, vector<double> >& iterable, int r, vector < vector<pair<int, vector<double> > > > & res, vector<pair<int, vector<double> > > partial_res, int index){
 	if(r == 0){
 		res.push_back(partial_res);
 		return;
@@ -65,7 +65,7 @@ void i_combinations_map(const std::map <int, std::vector<double> >& iterable, in
 	int i = 0;
 	for(auto w : iterable){
 		if(i >= index + 1){
-			partial_res.push_back(std::make_pair(w.first, w.second));
+			partial_res.push_back(make_pair(w.first, w.second));
 			i_combinations_map(iterable, r-1, res, partial_res, i);
 			partial_res.pop_back();
 		}
@@ -78,10 +78,10 @@ Return r length subsequences of elements from the input iterable.
 Pre: 	vector iterable has no repeted elements, r should be either 0 or less than iterable.size()
 Post:	returns a vector of vector of pairs of(int, vector) which each line corresponds of the r elements of the combination, without repeatings.
 */
-std::vector < std::vector<std::pair<int, std::vector<double> > > > combinations_map(const std::map <int, std::vector<double> >& iterable, int r){
+vector < vector<pair<int, vector<double> > > > combinations_map(const map <int, vector<double> >& iterable, int r){
 	r = (r == 0) ? iterable.size() : r;
-	std::vector < std::vector<std::pair<int, std::vector<double> > > > res;
-	std::vector<std::pair<int, std::vector<double> > > partial_res;
+	vector < vector<pair<int, vector<double> > > > res;
+	vector<pair<int, vector<double> > > partial_res;
 	i_combinations_map(iterable, r, res, partial_res, -1);
 	return res;
 }

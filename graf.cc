@@ -4,7 +4,7 @@
 
 
 
-void depth_first_search(int i, std::vector<bool>& visited, std::vector<int>& partial_res, const graph& g){
+void depth_first_search(int i, vector<bool>& visited, vector<int>& partial_res, const graph& g){
 	if(not visited[i]){
 		visited[i] = true;
 		partial_res.push_back(i);
@@ -20,12 +20,12 @@ void depth_first_search(int i, std::vector<bool>& visited, std::vector<int>& par
 	g is a G = (V,E) with n vertex and m edges represented by an adjacency list 
  	Computation cost: O(|V|+|E|)
 */
-void connex_components(const graph& g, std::vector < std::vector <int> >& res){
+void connex_components(const graph& g, vector < vector <int> >& res){
 	int V = g.size();
-	std::vector <bool> visited(V, false);
+	vector <bool> visited(V, false);
 	for(int i = 0; i < V; ++i){	
 		if(not visited[i]){
-			std::vector <int> partial_res;
+			vector <int> partial_res;
 			depth_first_search(i,visited,partial_res,g);
 			res.push_back(partial_res);
 		}
@@ -108,7 +108,7 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res,
 void get_statistic_data_file(bool ermon, int i){
 	for(int n = 10; n <= 100; n += 10){
 		bool b = false;
-		string file =  std::to_string(n) + ".txt";
+		string file =  to_string(n) + ".txt";
 		ofstream output(file);
 		for(float i = 0.01f; i <= 1.0f; i += 0.01f){
 			output << i << " ";
