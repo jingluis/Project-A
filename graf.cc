@@ -111,7 +111,7 @@ void RGG_test () {
 bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res, float& connect_c) {
 	int connexed, connexed_components;
 	connexed = connexed_components = 0;
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < 1000; ++i) {
 		graph g_test;
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, directed);
 		else g_test = random_geometric_graph(numVert, p);
@@ -122,32 +122,32 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res,
 	}
 	/*cout << "El graf aleatori generat amb " << numVert << " vertexs i amb una p = " << p << " te en mitjana:\n";
 	cout <<	"possibilitat de ser conex = " << float(connexed)/100.0 << "\ncomponents conexos esperat = " << float(connexed_components)/100.0 << "\n\n";*/
-	res = float(connexed)/100.0;
-	connect_c = float(connexed_components)/100.0;
-	if(res == 1) return true;
+	res = float(connexed)/1000.0;
+	connect_c = float(connexed_components)/1000.0;
+	if(res >= 1) return true;
 	return false;
 }
 
 /* 
 	 stores the result in files of the statistic tests for graphs with 10 - 100 vertexs, increasing 10 vertexs per loop
 	 ermon indicates if the graph is gnp or rgg
-	 i indicates which result we wanna obtain:
-	 - 0: probability to be connected 
-	 - 1: waiting number of CC 
+	 opt indicates which result we wanna obtain:
+	 - 1: probability to be connected 
+	 - 2: waiting number of CC 
 */	 
 
-void get_statistic_data_file(bool ermon, int i){
+void get_statistic_data_file(bool ermon, int opt){
 	for(int n = 10; n <= 100; n += 10){
 		bool b = false;
 		string file =  to_string(n) + ".txt";
 		ofstream output(file);
-		for(float i = 0.01f; i <= 1.0f; i += 0.01f){
+		for(float i = 0.001f; i <= 1.0f; i += 0.001f){
 			output << i << " ";
 			float res;
 			float connect_c;
 			if(not b){
 				b = Statistic_test(n, i, false, ermon,res, connect_c);
-				if(i == 0) output << res;
+				if(opt == 1) output << res;
 				else output << connect_c;
 			}
 			else output << 1;
@@ -178,10 +178,11 @@ int main () {
 				break;
 			case 3:
 				cout << "Please choose which kind of random graph you want to run the test" << endl;
-				cout << "0) Geometric Random Graph" << endl;
-				cout << "1) Binomial Random Graph" << endl;
-				bool ermon;
+				cout << "1) Geometric Random Graph" << endl;
+				cout << "2) Binomial Random Graph" << endl;
+				int ermon;
 				cin >> ermon;
+				bool b = (ermon == 1)? false:true;
 				cout << "Please choose which kind of statistic test you want to obtain" << endl;
 				cout << "1) probability of the graph being connected" << endl;
 				cout << "2) number of waiting connected components of a graph" << endl;

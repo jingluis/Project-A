@@ -1,3 +1,7 @@
+#IMPORTANT: you need to set working directory to source file location
+#if you use RStudio: go to Session -> Set Working Directory -> To Source File Location
+
+
 list_of_files <- list.files(path = "./", recursive = TRUE, patter = "\\.txt$")
 colo = vector()
 i = 0
