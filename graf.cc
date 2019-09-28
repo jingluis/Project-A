@@ -152,8 +152,7 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res,
 }
 
 /* 
-	 stores the result in files of the statistic tests for graphs with 10 - 100 vertexs, increasing 10 vertexs per loop
-	 ermon indicates if the graph is gnp or rgg
+	 stores the result in files of the statistic tests for graphs with c(10,50,100,250,500,1000) vertexs, ermon indicates if the graph is gnp or rgg
 	 opt indicates which result we wanna obtain:
 	 - 1: probability to be connected 
 	 - 2: waiting number of CC 
@@ -180,8 +179,7 @@ void get_statistic_data_file(bool ermon, int opt){
 }
 
 /* 
-	 stores the result in files of the statistic tests for graphs with 10 - 100 vertexs, increasing 10 vertexs per loop
-	 ermon indicates if the graph is gnp or rgg
+	 stores the result in files of the statistic tests for graphs with c(10,50,100,250,500,1000)vertexs, ermon indicates if the graph is gnp or rgg
 	 Returns the relation beetwen the size of the random generated graph and it's conectivity
 */
 
