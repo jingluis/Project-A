@@ -37,18 +37,13 @@ void connex_components(const graph& g, vector < vector <int> >& res){
 void GNP_test () {
 	int numVert;
 	double p;
-	bool directed;
 	string res;
 	cout << "Introduce number of vertexs: ";
 	cin >> numVert;
 	cout << "Introduce the probability: ";
 	cin >> p;
-	cout << "Introduce if you want the graph be directed: (yes/no): ";
-	cin >> res;
-	if(res == "yes" or res == "y") directed = true;
-	else directed = false;
 	graph g_test;
-	g_test = erdos_renyi_random_graph(numVert, p, directed);
+	g_test = erdos_renyi_random_graph(numVert, p);
 	cout << "\n\nAdjacency List\n\n";
 	int i = 0;
 	for (vector<int> v : g_test) {
@@ -106,15 +101,15 @@ void RGG_test () {
 
 /*
 	Returns true if the probability of a G = (V,E) with numVert vertex and numEdge edge being connected with probability p is 1 with 100 tests, false otherwise
-	Pre: numVert > 0, 0 <= numEdge <= numVert*(numVert-1)/2, 0.0 <= p <= 1.0, directed indicates whether the graph will be directed or not, ermon indicates if the graph is gnp or rgg,
+	Pre: numVert > 0, 0 <= numEdge <= numVert*(numVert-1)/2, 0.0 <= p <= 1.0, ermon indicates if the graph is gnp or rgg,
 			 res stores the probability.
 */
-bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool directed, bool ermon, float& res) {
+bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool ermon, float& res) {
 	int connexed;
 	connexed = 0;
 	for (int i = 0; i < 100; ++i) {
 		graph g_test;
-		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, directed, true, numEdge);
+		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, true, numEdge);
 		else g_test = random_geometric_graph(numVert, p, 2, 2.0, true, numEdge);
 		vector<int> partial_res;
 		vector<bool> visited(numVert, false);
@@ -128,15 +123,15 @@ bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool directed, 
 
 /*
 	Returns true if the probability of a G = (V,E) with numVert vertex being connected with probability p is 1 with 100 tests, false otherwise
-	Pre: numVert > 0, 0.0 <= p <= 1.0, directed indicates whether the graph will be directed or not, ermon indicates if the graph is gnp or rgg,
+	Pre: numVert > 0, 0.0 <= p <= 1.0,  ermon indicates if the graph is gnp or rgg,
 			 res stores the probability, and connex_c stores the waiting number of connected component.
 */
-bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res, float& connect_c) {
+bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect_c) {
 	int connexed, connexed_components;
 	connexed = connexed_components = 0;
 	for (int i = 0; i < 1000; ++i) {
 		graph g_test;
-		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, directed);
+		if (ermon) g_test = erdos_renyi_random_graph(numVert, p);
 		else g_test = random_geometric_graph(numVert, p);
 		graph component;
 		connex_components(g_test, component);
@@ -168,7 +163,7 @@ void get_statistic_data_file(bool ermon, int opt){
 			float res;
 			float connect_c;
 			if(not b){
-				b = Statistic_test(test_value[n], i, false, ermon,res, connect_c);
+				b = Statistic_test(test_value[n], i, ermon,res, connect_c);
 				if(opt == 1) output << res;
 				else output << connect_c;
 			}
@@ -196,7 +191,7 @@ void get_statistic_Edges_Connexed_file(bool ermon) {
 				output << k << " ";
 				float res;
 				if (not b) {
-					b = Statistic_Edges_Connexed(test_value[i], k, j, false, ermon, res);
+					b = Statistic_Edges_Connexed(test_value[i], k, j, ermon, res);
 					output << res;
 				}
 				else output << 1;

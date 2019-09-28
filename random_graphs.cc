@@ -20,7 +20,7 @@ graph complete_graph(int n){
 }
 
 /*
-		Returns a $G_{n,p}$ random graph, also known as an Erdős-Rényi graph
+		Returns a $G_{n,p}$ random undirected graph, also known as an Erdős-Rényi graph
     or a binomial graph.
     The $G_{n,p}$ model chooses each of the possible edges with probability $p$.
 
@@ -30,9 +30,7 @@ graph complete_graph(int n){
         The number of nodes.
     p : double
         Probability for edge creation.
-    directed : bool, optional (default=False)
-        If True, this function returns a directed graph.
-	edge_fixed : bool, optional (default = False)
+		edge_fixed : bool, optional (default = False)
   	  true if we want get an edge number fixed graph
     Edges : int, optional if not n_fixed (default = 0)
   	  indicate the number of edges that we want the graph to have
@@ -41,12 +39,11 @@ graph complete_graph(int n){
     This algorithm [2]_ runs in $O(n^2)$ time.  
 */
 
-graph erdos_renyi_random_graph(int n, double p, bool directed, bool edge_fixed, int Edges){
+graph erdos_renyi_random_graph(int n, double p, bool edge_fixed, int Edges){
 	vector < vector<int> > edges;
 	vector <int> vertex(n);
 	for(int i = 0; i < n; ++i) vertex[i] = i;
-	if(directed) edges = permutations(vertex, 2);
-	else edges = combinations(vertex, 2);
+ 	edges = combinations(vertex, 2);
 	graph res(n);
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
@@ -55,11 +52,10 @@ graph erdos_renyi_random_graph(int n, double p, bool directed, bool edge_fixed, 
 		for(int i = 0; i < edges.size(); ++i){
 			if((rand()%100/(double)100) < p){
 				res[edges[i][0]].push_back(edges[i][1]);
-				if(not directed) res[edges[i][1]].push_back(edges[i][0]);
+				res[edges[i][1]].push_back(edges[i][0]);
 			}
 		}
 	}
-
 	else {
 		int added_edge = 0;
 		vector<bool> added(edges.size(), false);
@@ -67,7 +63,7 @@ graph erdos_renyi_random_graph(int n, double p, bool directed, bool edge_fixed, 
 			if (!added[i] and (rand()%100/(double)100) < p) {
 				++added_edge;
 				res[edges[i][0]].push_back(edges[i][1]);
-				if(not directed) res[edges[i][1]].push_back(edges[i][0]);
+				res[edges[i][1]].push_back(edges[i][0]);
 				added[i] = true;
 			}
 		}

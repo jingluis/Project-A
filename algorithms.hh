@@ -1,9 +1,6 @@
 #include "utils.hh"
 
 
-void i_permutations(const vector <int>& iterable, int r, vector <vector <int> >& res, vector <int>& partial_res, vector <bool>& visited);
-
-vector <vector <int> > permutations(const vector <int>& iterable, int r = 0);
 
 void i_combinations(const vector <int>& iterable, int r, vector <vector <int> >& res, vector <int>& partial_res, int index);
 
