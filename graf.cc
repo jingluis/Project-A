@@ -79,7 +79,7 @@ void RGG_test () {
 	cout << endl;
 }
 
-void Statistic_test(int numVert, float p, bool directed, bool ermon) {
+bool Statistic_test(int numVert, float p, bool directed, bool ermon) {
 	int connexed, connexed_components;
 	connexed = connexed_components = 0;
 	for (int i = 0; i < 100; ++i) {
@@ -94,17 +94,27 @@ void Statistic_test(int numVert, float p, bool directed, bool ermon) {
 	/*cout << "El graf aleatori generat amb " << numVert << " vertexs i amb una p = " << p << " te en mitjana:\n";
 	cout <<	"possibilitat de ser conex = " << float(connexed)/100.0 << "\ncomponents conexos esperat = " << float(connexed_components)/100.0 << "\n\n";*/
 	cout <<  float(connexed)/100.0;
+	if(float(connexed)/100.0 == 1) return true;
+	return false;
 }
 
 void get_Statistical_test_data(bool ermon) {
 	int k = 0;
+	bool b = false;
 	for (int i = 10; i <= 100; i=i+10) {
 		for (float j = 0.0; j < 1; j += 0.1) {
-			for (float k = 0.01; k < 0.9; k += 0.1) {
-				Statistic_test(i, j+k, false, ermon);
-				cout << " ";
+			for (float k = 0.01; k < 0.09; k += 0.01) {
+				if(not b){
+					b = Statistic_test(i, j+k, false, ermon);
+					cout << " ";
+				}
+				else cout << 1 << " ";
 			}
-			Statistic_test(i, j + 0.9, false, ermon);
+			if(not b){
+					b = Statistic_test(i, j+k, false, ermon);
+					cout << " ";
+			}
+			else cout << 1 << " ";
 			cout << endl;
 		}
 		cout << endl;
@@ -112,9 +122,11 @@ void get_Statistical_test_data(bool ermon) {
 }
 
 void statistic_aux(bool ermon, int n){
+	bool b = false;
 	for(float i = 0.01f; i <= 1.0f; i += 0.01f){
 		cout << i << " ";
-		Statistic_test(n, i, false, ermon);
+		if(not b) b = Statistic_test(n, i, false, ermon);
+		else cout << 1;
 		cout << endl;
 	}
 }
