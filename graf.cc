@@ -188,7 +188,7 @@ int main () {
 				cout << "2) number of waiting connected components of a graph" << endl;
 				int i;
 				cin >> i;
-				get_statistic_data_file(ermon, i);
+				get_statistic_data_file(b, i);
 				cout << "Statistic data collected correctly" << endl;
 				break;
 		}
