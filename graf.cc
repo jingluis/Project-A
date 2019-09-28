@@ -4,33 +4,39 @@
 int test_value[] = {10,50,100,250,500,1000};
 
 
-void depth_first_search(int i, vector<bool>& visited, vector<int>& partial_res, const graph& g){
+void depth_first_search(int i, vector<bool>& visited, vector<int>& partial_res, const graph& g, int& cc_size){
 	if(not visited[i]){
 		visited[i] = true;
 		partial_res.push_back(i);
 		for(int w : g[i]){
-			if(not visited[w]) depth_first_search(w,visited,partial_res,g);
+			if(not visited[w]){
+				++cc_size;
+				depth_first_search(w,visited,partial_res,g,cc_size);
+			}
 		}
 	}
 	return;
 }
 
 /* 
-	Return a list of each connex component of a graph g
+	Return a list of each connex component of a graph g and the biggest CC size
 	g is a G = (V,E) with n vertex and m edges represented by an adjacency list 
  	Computation cost: O(|V|+|E|)
 */
-void connex_components(const graph& g, vector < vector <int> >& res){
+int max_connex_components(const graph& g, vector < vector <int> >& res){
 	int V = g.size();
+	int max_cc_size = -1;
 	vector <bool> visited(V, false);
 	for(int i = 0; i < V; ++i){	
 		if(not visited[i]){
+			int cc_size = 0;
 			vector <int> partial_res;
-			depth_first_search(i,visited,partial_res,g);
+			depth_first_search(i,visited,partial_res,g, cc_size);
 			res.push_back(partial_res);
+			max_cc_size = max(max_cc_size,cc_size);
 		}
 	}
-	return;
+	return max_cc_size;
 }
 
 /* Runs a binomial random graph test outputting the Adjacency List of graph G = (V,E) and its connected component */
@@ -55,7 +61,7 @@ void GNP_test () {
 	}
 	cout << "\n\nConnected Components\n\n";
 	graph component;
-	connex_components(g_test, component);
+	max_connex_components(g_test, component);
 	i = 0; 
 	for (vector<int> v : component) {
 		cout << "Connected Component " << i++ << ": ";
@@ -87,7 +93,7 @@ void RGG_test () {
 	}
 	cout << "\n\nConnected Components\n\n";
 	graph component;
-	connex_components(g_test, component);
+	max_connex_components(g_test, component);
 	i = 0; 
 	for (vector<int> v : component) {
 		cout << "Connected Component " << i++ << ": ";
@@ -113,7 +119,8 @@ bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool ermon, flo
 		else g_test = random_geometric_graph(numVert, p, 2, 2.0, true, numEdge);
 		vector<int> partial_res;
 		vector<bool> visited(numVert, false);
-		depth_first_search(0,visited, partial_res, g_test);
+		int aux = 0;
+		depth_first_search(0,visited, partial_res, g_test, aux);
 		connexed += numVert == partial_res.size();
 	}
 	res = float(connexed)/100.0;
@@ -134,7 +141,7 @@ bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p);
 		else g_test = random_geometric_graph(numVert, p);
 		graph component;
-		connex_components(g_test, component);
+		max_connex_components(g_test, component);
 		connexed_components += component.size();
 		connexed += (component.size() == 1);
 	}
