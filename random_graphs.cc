@@ -43,16 +43,17 @@ graph erdos_renyi_random_graph(int n, double p, bool edge_fixed, int Edges){
 	vector < vector<int> > edges;
 	vector <int> vertex(n);
 	for(int i = 0; i < n; ++i) vertex[i] = i;
- 	edges = combinations(vertex, 2);
 	graph res(n);
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
-
+	edges = combinations(vertex,2);
 	if (!edge_fixed) {
-		for(int i = 0; i < edges.size(); ++i){
-			if((rand()%100/(double)100) < p){
-				res[edges[i][0]].push_back(edges[i][1]);
-				res[edges[i][1]].push_back(edges[i][0]);
+		for(int i = 0; i < n; ++i){
+			for(int j = i + 1; j < n; ++j){
+				if((rand()%100/(double)100) < p){
+					res[i].push_back(j);
+					res[j].push_back(i);
+				}
 			}
 		}
 	}
@@ -89,6 +90,7 @@ void slow_edges(graph& G,const map <int, vector<double>>& pos, double radius, do
 			}
 		}
 	}
+
 	else {
 		int added_edge = 0;
 		vector<bool> added(combi.size(), false);
@@ -149,7 +151,6 @@ graph random_geometric_graph(int n, double radius, int dim, double p, bool edge_
 		for(int j = 0; j < dim; ++j) pos_aux.push_back((rand()%100/(double)100));
 		pos[i] = pos_aux;
 	}
-	map <int, vector<double>>::iterator it;
 	slow_edges(G, pos, radius, p, dim, edge_fixed, Edges);
 	return G;
 }
