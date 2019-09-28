@@ -1,10 +1,7 @@
-#include <iostream>
-#include <vector>
 #include "random_graphs.hh"
-#include <fstream>
-#include <string>
-using namespace std;
-using graph = std::vector <std::vector <int> >;
+
+
+
 
 
 void depth_first_search(int i, std::vector<bool>& visited, std::vector<int>& partial_res, const graph& g){
@@ -18,9 +15,11 @@ void depth_first_search(int i, std::vector<bool>& visited, std::vector<int>& par
 	return;
 }
 
-// Return a list of each connex component of a graph g
-// g is a G = (V,E) with n vertex and m edges represented by an adjacency list 
-// Computation cost: O(|V|+|E|)
+/* 
+	Return a list of each connex component of a graph g
+	g is a G = (V,E) with n vertex and m edges represented by an adjacency list 
+ 	Computation cost: O(|V|+|E|)
+*/
 void connex_components(const graph& g, std::vector < std::vector <int> >& res){
 	int V = g.size();
 	std::vector <bool> visited(V, false);
@@ -34,6 +33,7 @@ void connex_components(const graph& g, std::vector < std::vector <int> >& res){
 	return;
 }
 
+/* Runs a binomial random graph test outputting the Adjacency List of graph G = (V,E) and its connected component */
 void GNP_test () {
 	int numVert;
 	double p;
@@ -41,7 +41,7 @@ void GNP_test () {
 	cin >> numVert >> p >> directed;
 	graph g_test;
 	g_test = erdos_renyi_random_graph(numVert, p, directed);
-	cout << "\n\nAdjacency Matrix\n\n";
+	cout << "\n\nAdjacency List\n\n";
 	for (vector<int> v : g_test) {
 		for (int i : v) {
 			cout << i << " ";
@@ -58,13 +58,14 @@ void GNP_test () {
 	cout << endl;
 }
 
+/* Runs a geometric random graph test outputting the Adjacency List of graph G = (V,E) and its connected component */
 void RGG_test () {
 	int numVert;
 	double radius;
 	cin >> numVert >> radius;
 	graph g_test;
 	g_test = random_geometric_graph(numVert, radius);
-	cout << "\n\nAdjacency Matrix\n\n";
+	cout << "\n\nAdjacency List\n\n";
 	for (vector<int> v : g_test) {
 		for (int i : v) {
 			cout << i << " ";
@@ -101,8 +102,8 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res,
 	return false;
 }
 
-// 0: probability to be connected
-// 1: waiting number of CC
+/* 0: probability to be connected */
+/* 1: waiting number of CC */
 
 void get_statistic_data_file(bool ermon, int i){
 	for(int n = 10; n <= 100; n += 10){

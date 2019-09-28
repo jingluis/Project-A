@@ -18,6 +18,11 @@ void i_permutations(const std::vector <int>& iterable, int r, std::vector <std::
 	} 
 }
 
+/*
+Return successive r length permutations of elements in the iterable.
+Pre: 	vector iterable has no repeted elements, r should be either 0 or less than iterable.size()
+Post:	returns a vector of vector which each line corresponds of the r elements of the permutation, without repeatings.
+*/
 std::vector <std::vector <int> > permutations(const std::vector <int>& iterable, int r){
 	r = (r == 0) ? iterable.size() : r;
 	std::vector <std::vector <int> > res;
@@ -39,6 +44,11 @@ void i_combinations(const std::vector <int>& iterable, int r, std::vector <std::
 	} 
 }
 
+/*
+Return r length subsequences of elements from the input iterable.
+Pre: 	vector iterable has no repeted elements, r should be either 0 or less than iterable.size()
+Post:	returns a vector of vector which each line corresponds of the r elements of the combination, without repeatings.
+*/
 std::vector <std::vector <int> > combinations(const std::vector <int>& iterable, int r){
 	r = (r == 0) ? iterable.size() : r;
 	std::vector <std::vector <int> > res;
@@ -63,6 +73,11 @@ void i_combinations_map(const std::map <int, std::vector<double> >& iterable, in
 	}
 }
 
+/*
+Return r length subsequences of elements from the input iterable.
+Pre: 	vector iterable has no repeted elements, r should be either 0 or less than iterable.size()
+Post:	returns a vector of vector of pairs of(int, vector) which each line corresponds of the r elements of the combination, without repeatings.
+*/
 std::vector < std::vector<std::pair<int, std::vector<double> > > > combinations_map(const std::map <int, std::vector<double> >& iterable, int r){
 	r = (r == 0) ? iterable.size() : r;
 	std::vector < std::vector<std::pair<int, std::vector<double> > > > res;

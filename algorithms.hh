@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <map>
-
+#include "utils.hh"
 
 
 void i_permutations(const std::vector <int>& iterable, int r, std::vector <std::vector <int> >& res, std::vector <int>& partial_res, std::vector <bool>& visited);

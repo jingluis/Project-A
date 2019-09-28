@@ -1,11 +1,6 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <time.h>
 #include "algorithms.hh"
-#include "random.hh"
 
-static Random_generator rnd;
+
 
 using graph = std::vector < std::vector <int> >;
 

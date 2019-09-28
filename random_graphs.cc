@@ -1,6 +1,14 @@
 #include "random_graphs.hh"
-using graph = std::vector < std::vector <int> >;
 
+
+
+/* 
+		Return the complete graph 'K_n' with n nodes.
+    Parameters
+    ----------
+    n : int 
+        number of nodes.
+*/
 graph complete_graph(int n){
 	graph res(n);
 	for(int i = 0; i < n; ++i){
@@ -10,6 +18,23 @@ graph complete_graph(int n){
 	}
 	return res;
 }
+
+/*
+		Returns a $G_{n,p}$ random graph, also known as an Erdős-Rényi graph
+    or a binomial graph.
+    The $G_{n,p}$ model chooses each of the possible edges with probability $p$.
+
+    Parameters
+    ----------
+    n : int
+        The number of nodes.
+    p : double
+        Probability for edge creation.
+    directed : bool, optional (default=False)
+        If True, this function returns a directed graph.
+
+    This algorithm [2]_ runs in $O(n^2)$ time.  
+*/
 
 graph erdos_renyi_random_graph(int n, double p, bool directed){
 	std::vector < std::vector<int> > edges;
@@ -31,6 +56,11 @@ graph erdos_renyi_random_graph(int n, double p, bool directed){
 	return res;
 }
 
+/*
+	Returns edge list of node pairs within 'radius' of each other
+  using Minkowski distance metric 'p'
+  Works 'O(n^2)' time
+*/
 void slow_edges(graph& G,const std::map <int, std::vector<double>>& pos, double radius, double p, int dim){
 	auto combi = combinations_map(pos,2);
 	for(int i = 0; i < combi.size(); ++i){
@@ -43,6 +73,34 @@ void slow_edges(graph& G,const std::map <int, std::vector<double>>& pos, double 
 	}
 } 
 
+/*
+	Returns a random geometric graph in the unit cube of dimensions 'dim'.
+  The random geometric graph model places 'n' nodes uniformly at
+  random in the unit cube. Two nodes are joined by an edge if the
+  distance between the nodes is at most 'radius'.
+  Edges are determined using Minkowski distance.
+  time complexity $O(n^2)$.
+  Parameters
+  ----------
+  n : int 
+      Number of nodes 
+  radius: double
+      Distance threshold value
+  dim : int, optional
+      Dimension of graph
+  p : double, optional
+      Which Minkowski distance metric to use.  'p' has to meet the condition
+      '1 <= p <= infinity'.
+      If this argument is not specified, the :math:'L^2' metric
+      (the Euclidean distance metric), p = 2 is used.
+      This should not be confused with the 'p' of an Erdős-Rényi random
+      graph, which represents probability.
+
+  Returns
+  -------
+  Graph
+      A random geometric graph, undirected and without self-loops.
+*/
 graph random_geometric_graph(int n, double radius, int dim, double p){
 	int n_name = n;
 	graph G(n);
