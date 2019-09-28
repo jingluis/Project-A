@@ -1,7 +1,7 @@
 #include "random_graphs.hh"
 
 
-
+int test_value = {10,50,100,250,500,1000};
 
 
 void depth_first_search(int i, vector<bool>& visited, vector<int>& partial_res, const graph& g){
@@ -160,7 +160,7 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res,
 */	 
 
 void get_statistic_data_file(bool ermon, int opt){
-	for(int n = 10; n <= 100; n += 10){
+	for(int n = 0; n <= 5; n += 1){
 		bool b = false;
 		string file =  to_string(n) + ".txt";
 		ofstream output(file);
@@ -169,7 +169,7 @@ void get_statistic_data_file(bool ermon, int opt){
 			float res;
 			float connect_c;
 			if(not b){
-				b = Statistic_test(n, i, false, ermon,res, connect_c);
+				b = Statistic_test(test_value[n], i, false, ermon,res, connect_c);
 				if(opt == 1) output << res;
 				else output << connect_c;
 			}
@@ -188,17 +188,17 @@ void get_statistic_data_file(bool ermon, int opt){
 
 void get_statistic_Edges_Connexed_file(bool ermon) {
 	
-	for (int i = 10; i <= 100; i += 10) {
-		int max_Edge_number = (i*(i-1))/2;
+	for (int i = 0; i <= 5; i += 1) {
+		int max_Edge_number = (test_value[i]*(test_value[i]-1))/2;
 		for (float j = 0.1f; j < 1.1f; j += 0.1f) {
 			bool b = false;
-			string file =  to_string(i) + " with p = " + to_string(j) + ".txt";
+			string file =  to_string(test_value[i]) + " with p = " + to_string(j) + ".txt";
 			ofstream output(file);
 			for (int k = 0; k <= max_Edge_number; ++k) {
 				output << k << " ";
 				float res;
 				if (not b) {
-					b = Statistic_Edges_Connexed(i, k, j, false, ermon, res);
+					b = Statistic_Edges_Connexed(test_value[i], k, j, false, ermon, res);
 					output << res;
 				}
 				else output << 1;
