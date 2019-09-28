@@ -156,7 +156,13 @@ bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect
 void get_statistic_data_file(bool ermon, int opt){
 	for(int n = 0; n <= 5; n += 1){
 		bool b = false;
-		string file =  to_string(n) + ".txt";
+		string file = "";
+		if(ermon) file += "gnp_";
+		else file += "rgg_";
+		if(opt == 1) file += "opt1_";
+		else file += "opt2_";
+		file +=  (to_string(n) + ".txt");
+
 		ofstream output(file);
 		for(float i = 0.001f; i <= 1.0f; i += 0.001f){
 			output << i << " ";
