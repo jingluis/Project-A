@@ -11,7 +11,7 @@ for (val in list_of_files){
   value = floor(runif(1, min=1, max=657))
   if(i != 1) colo = c(colo, colors()[value])
   else colo_for_100 = colors()[value]
-  if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2, lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Transmission Probability P")
+  if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2, lwd = 2,col = colors()[value],ylab = "Waiting number of Connected Components", xlab = "Transmission Radius R")
   lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
   i = i+1
   if(i != 1)inici = inici + 10

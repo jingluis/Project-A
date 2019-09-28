@@ -1,4 +1,4 @@
-list_of_files <- list.files(path = "C:/Users/jingluis/Desktop/project A/", recursive = TRUE, patter = "\\.txt$")
+list_of_files <- list.files(path = "./", recursive = TRUE, patter = "\\.txt$")
 colo = vector()
 i = 0
 leg = vector()

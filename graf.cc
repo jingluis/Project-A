@@ -81,7 +81,7 @@ void RGG_test () {
 	cout << endl;
 }
 
-bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res) {
+bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res, float& connex_c) {
 	int connexed, connexed_components;
 	connexed = connexed_components = 0;
 	for (int i = 0; i < 100; ++i) {
@@ -96,50 +96,15 @@ bool Statistic_test(int numVert, float p, bool directed, bool ermon, float& res)
 	/*cout << "El graf aleatori generat amb " << numVert << " vertexs i amb una p = " << p << " te en mitjana:\n";
 	cout <<	"possibilitat de ser conex = " << float(connexed)/100.0 << "\ncomponents conexos esperat = " << float(connexed_components)/100.0 << "\n\n";*/
 	res = float(connexed)/100.0;
+	connex_c = float(connexed_components)/100.0;
 	if(res == 1) return true;
 	return false;
 }
 
-void get_Statistical_test_data(bool ermon) {
-	int k = 0;
-	
-	float res;
-	for (int i = 10; i <= 100; i=i+10) {
-		bool b = false;
-		for (float j = 0.0; j < 1; j += 0.1) {
-			for (float k = 0.01; k < 0.09; k += 0.01) {
-				if(not b){
-					b = Statistic_test(i, j+k, false, ermon,res);
-					cout << " ";
-				}
-				else cout << 1 << " ";
-			}
-			if(not b){
-					b = Statistic_test(i, j+k, false, ermon,res);
-					cout << " ";
-			}
-			else cout << 1 << " ";
-			cout << endl;
-		}
-		cout << endl;
-	}
-}
+// 0: probability to be connected
+// 1: waiting number of CC
 
-void statistic_aux(bool ermon){
-	
-	for(int n = 10; n <= 100; n += 10){
-		bool b = false;
-		for(float i = 0.01f; i <= 1.0f; i += 0.01f){
-			cout << i << " ";
-			float res;
-			if(not b) b = Statistic_test(n, i, false, ermon,res);
-			else cout << 1;
-			cout << endl;
-		}
-	}
-}
-
-void statistic_aux_file(bool ermon){
+void get_statistic_data_file(bool ermon, int i){
 	for(int n = 10; n <= 100; n += 10){
 		bool b = false;
 		string file =  std::to_string(n) + ".txt";
@@ -147,9 +112,11 @@ void statistic_aux_file(bool ermon){
 		for(float i = 0.01f; i <= 1.0f; i += 0.01f){
 			output << i << " ";
 			float res;
+			float connex_c;
 			if(not b){
-				b = Statistic_test(n, i, false, ermon,res);
-				output <<res;
+				b = Statistic_test(n, i, false, ermon,res, connex_c);
+				if(i == 0) output <<res;
+				else output << connex_c;
 			}
 			else output << 1;
 			output << endl;
@@ -163,5 +130,5 @@ int main () {
 	srand(time(0));
 	bool ermon;
 	cin >> ermon;
-	statistic_aux_file(ermon);
+	get_statistic_data_file(ermon, 1);
 }
