@@ -78,35 +78,39 @@ graph erdos_renyi_random_graph(int n, double p, bool edge_fixed, int Edges){
   using Minkowski distance metric 'p'
   Works 'O(n^2)' time
 */
-void slow_edges(graph& G,const map <int, vector<double>>& pos, double radius, double p, int dim, bool edge_fixed, int Edges){
-	auto combi = combinations_map(pos,2);
+void slow_edges(graph& G,const vector <vector<double>>& pos, double radius, double p, int dim, bool edge_fixed, int Edges){
+	// auto combi = combinations_map(pos,2);
 	if (!edge_fixed) {
-		for(int i = 0; i < combi.size(); ++i){
-			double sum = 0.0;
-			for(int j = 0; j < dim; ++j) sum += pow(abs(combi[i][0].second[j]-combi[i][1].second[j]), p);
-			if(sum <= pow(radius, p)){
-				G[combi[i][0].first].push_back(combi[i][1].first);
-				G[combi[i][1].first].push_back(combi[i][0].first);
-			}
-		}
-	}
-
-	else {
-		int added_edge = 0;
-		vector<bool> added(combi.size(), false);
-		for(int i = 0; added_edge < Edges; i = (i+1)%combi.size()){
-			if (!added[i]) {
-				double sum = 0.0;
-				for(int j = 0; j < dim; ++j) sum += pow(abs(combi[i][0].second[j]-combi[i][1].second[j]), p);
+		for(int i = 0; i < pos.size(); ++i){
+			for(int j = i + 1; j < pos.size(); ++j){
+				double sum = 0;
+				for(int k = 0; k < dim; ++k) sum += pow(pos[i][k] - pos[j][k], p);
 				if(sum <= pow(radius, p)){
-					added_edge += edge_fixed;
-					G[combi[i][0].first].push_back(combi[i][1].first);
-					G[combi[i][1].first].push_back(combi[i][0].first);
-					added[i] = true;
+					G[i].push_back(j);
+					G[j].push_back(i);
 				}
 			}
 		}
 	}
+
+	
+
+	// else {
+	// 	int added_edge = 0;
+	// 	vector<bool> added(combi.size(), false);
+	// 	for(int i = 0; added_edge < Edges; i = (i+1)%combi.size()){
+	// 		if (!added[i]) {
+	// 			double sum = 0.0;
+	// 			for(int j = 0; j < dim; ++j) sum += pow(abs(combi[i][0].second[j]-combi[i][1].second[j]), p);
+	// 			if(sum <= pow(radius, p)){
+	// 				added_edge += edge_fixed;
+	// 				G[combi[i][0].first].push_back(combi[i][1].first);
+	// 				G[combi[i][1].first].push_back(combi[i][0].first);
+	// 				added[i] = true;
+	// 			}
+	// 		}
+	// 	}
+	// }
 } 
 
 /*
@@ -144,8 +148,7 @@ void slow_edges(graph& G,const map <int, vector<double>>& pos, double radius, do
 graph random_geometric_graph(int n, double radius, int dim, double p, bool edge_fixed, int Edges){
 	int n_name = n;
 	graph G(n);
-	map <int, vector <double>> pos;
-
+	vector < vector <double> > pos(n);
 	for(int i = 0; i < n; ++i){
 		vector <double> pos_aux;
 		for(int j = 0; j < dim; ++j) pos_aux.push_back((rand()%100/(double)100));
