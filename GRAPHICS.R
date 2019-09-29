@@ -15,7 +15,7 @@ for (val in list_of_files){
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
   if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2,ylim = c(0,1.0), lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Transmission Probability P")
-  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
+  else lines(dades$V1,dades$V2, col = colors()[value], lwd = 2, type = "l", lty = 6) 
   i = i+1
 }
 
@@ -37,7 +37,7 @@ for (val in list_of_files){
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
   if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2,ylim = c(0,1.0), lwd = 2,col = colors()[value],ylab = "Probability that network is connected", xlab = "Transmission Radius R")
-  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
+  else lines(dades$V1,dades$V2, col = colors()[value], lwd = 2, type = "l", lty = 6) 
   i = i+1
 }
 
@@ -59,7 +59,7 @@ for (val in 1:6){
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
   if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 6,lwd = 2,col = colors()[value],ylab = "Waiting number of Connected Components", xlab = "Transmission Probability P")
-  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
+  else lines(dades$V1,dades$V2, col = colors()[value], lwd = 2, type = "l", lty = 6) 
   i = i+1
 }
 
@@ -82,7 +82,7 @@ for (val in 1:6){
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
   if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2, lwd = 2,col = colors()[value],ylab = "Waiting number of Connected Components", xlab = "Transmission Radius R")
-  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
+  else lines(dades$V1,dades$V2, col = colors()[value], lwd = 2, type = "l", lty = 6) 
   i = i+1
 }
 
@@ -108,7 +108,7 @@ for (val in 1:6){
     plot(dades$V1,dades$V2,type = "l",ylim = c(0,1000),lty = 6,lwd = 2,col = colors()[value],ylab = "Waiting maximum connected component size", xlab = "Transmission Probability P")
     axis(side = 1, at = seq(0,1,by = 0.1))
   }
-  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6) 
+  else lines(dades$V1,dades$V2, col = colors()[value], lwd = 2, type = "l", lty = 6) 
   i = i+1
 }
 
@@ -131,7 +131,7 @@ for (val in 1:6){
   value = floor(runif(1, min=1, max=657))
   colo = c(colo, colors()[value])
   if(i == 0) plot(dades$V1,dades$V2,type = "l",lty = 2,ylim = c(0,1000), lwd = 2,col = colors()[value],ylab = "Maximum connected component size", xlab = "Transmission Radius R")
-  else lines(dades$V1,dades$V2, col = colors()[floor(runif(1, min=1, max=657))], lwd = 2, type = "l", lty = 6)  
+  else lines(dades$V1,dades$V2, col = colors()[value], lwd = 2, type = "l", lty = 6)  
   i = i+1
 }
 

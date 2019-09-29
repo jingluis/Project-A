@@ -136,7 +136,7 @@ bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool ermon, flo
 */
 bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect_c, float & max_cc) {
 	int connexed, connexed_components, max_cc_s;
-	connexed = connexed_components = 0;
+	connexed = connexed_components = max_cc_s = 0 ;
 	for (int i = 0; i < 1000; ++i) {
 		graph g_test;
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p);
