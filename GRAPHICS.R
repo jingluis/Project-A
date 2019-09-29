@@ -52,8 +52,8 @@ colo = vector()
 i = 0
 leg = vector()
 inici = c(10,50,100,250,500,1000)
-for (val in list_of_files){
-  result = paste("./", val, sep = "")
+for (val in 1:6){
+  result = paste("./", list_of_files[val], sep = "")
   leg = c(leg, paste("N = ", paste0(inici[i+1]),sep = "")) 
   dades <- read.table(result)
   value = floor(runif(1, min=1, max=657))
@@ -75,8 +75,8 @@ colo = vector()
 i = 0
 leg = vector()
 inici = c(10,50,100,250,500,1000)
-for (val in list_of_files){
-  result = paste("./", val, sep = "")
+for (val in 1:6){
+  result = paste("./", list_of_files[val], sep = "")
   leg = c(leg, paste("N = ", paste0(inici[i+1]),sep = "")) 
   dades <- read.table(result)
   value = floor(runif(1, min=1, max=657))
