@@ -173,7 +173,7 @@ void get_statistic_data_file(bool ermon, int opt){
 		else file += "opt4_";
 		file +=  (to_string(n) + ".txt");
 		ofstream output(file);
-		for(float i = (opt == 2)? 0.001f:0.000f; i <= 1.0f; i += 0.001f){
+		for(float i = (opt != 2)? 0.001f:0.000f; i <= 1.0f; i += 0.001f){
 			output << i << " ";
 			float res;
 			float connect_c;
