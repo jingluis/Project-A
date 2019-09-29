@@ -40,8 +40,6 @@ graph complete_graph(int n){
 */
 
 graph erdos_renyi_random_graph(int n, double p, bool edge_fixed, int Edges){
-	vector <int> vertex(n);
-	for(int i = 0; i < n; ++i) vertex[i] = i;
 	graph res(n);
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
@@ -85,7 +83,7 @@ void slow_edges(graph& G, const vector <vector<double>>& pos, double radius, dou
 	if (!edge_fixed) {
 		for(int i = 0; i < pos.size(); ++i){
 			for(int j = i + 1; j < pos.size(); ++j){
-				double sum = 0;
+				double sum = 0.0;
 				for(int k = 0; k < dim; ++k) sum += pow(pos[i][k] - pos[j][k], p);
 				if(sum <= pow(radius, p)){
 					G[i].push_back(j);
@@ -102,7 +100,7 @@ void slow_edges(graph& G, const vector <vector<double>>& pos, double radius, dou
 	// 		for(int i = 0; i < pos.size() and added_edge < Edges; ++i){
 	// 			for(int j = i + 1; j < pos.size() and added_edge < Edges; ++j){
 	// 				if(not added[i][j]){
-	// 					double sum = 0;
+	// 					double sum = 0.0;
 	// 					for(int k = 0; k < dim; ++k) sum += pow(pos[i][k] - pos[j][k], p);
 	// 					if(sum <= pow(radius, p)){
 	// 						G[i].push_back(j);
@@ -153,6 +151,7 @@ void slow_edges(graph& G, const vector <vector<double>>& pos, double radius, dou
 graph random_geometric_graph(int n, double radius, int dim, double p, bool edge_fixed, int Edges){
 	int n_name = n;
 	graph G(n);
+	if(radius == 0) return G;
 	vector < vector <double> > pos(n);
 	for(int i = 0; i < n; ++i){
 		vector <double> pos_aux;

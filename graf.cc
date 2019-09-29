@@ -29,7 +29,7 @@ int max_connex_components(const graph& g, vector < vector <int> >& res){
 	vector <bool> visited(V, false);
 	for(int i = 0; i < V; ++i){	
 		if(not visited[i]){
-			int cc_size = 0;
+			int cc_size = 1;
 			vector <int> partial_res;
 			depth_first_search(i,visited,partial_res,g, cc_size);
 			res.push_back(partial_res);
@@ -123,6 +123,7 @@ bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool ermon, flo
 		depth_first_search(0,visited, partial_res, g_test, aux);
 		connexed += numVert == partial_res.size();
 	}
+
 	res = float(connexed)/100.0;
 	if (res == 1) return true;
 	return false;
@@ -133,15 +134,15 @@ bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool ermon, flo
 	Pre: numVert > 0, 0.0 <= p <= 1.0,  ermon indicates if the graph is gnp or rgg,
 			 res stores the probability, and connex_c stores the waiting number of connected component.
 */
-bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect_c) {
-	int connexed, connexed_components;
+bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect_c, float & max_cc) {
+	int connexed, connexed_components, max_cc_s;
 	connexed = connexed_components = 0;
 	for (int i = 0; i < 1000; ++i) {
 		graph g_test;
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p);
 		else g_test = random_geometric_graph(numVert, p);
 		graph component;
-		max_connex_components(g_test, component);
+		max_cc_s += max_connex_components(g_test, component);
 		connexed_components += component.size();
 		connexed += (component.size() == 1);
 	}
@@ -149,6 +150,7 @@ bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect
 	cout <<	"possibilitat de ser conex = " << float(connexed)/100.0 << "\ncomponents conexos esperat = " << float(connexed_components)/100.0 << "\n\n";*/
 	res = float(connexed)/1000.0;
 	connect_c = float(connexed_components)/1000.0;
+	max_cc = float(max_cc_s)/1000.0;
 	if(res >= 1) return true;
 	return false;
 }
@@ -167,20 +169,25 @@ void get_statistic_data_file(bool ermon, int opt){
 		if(ermon) file += "gnp_";
 		else file += "rgg_";
 		if(opt == 1) file += "opt1_";
-		else file += "opt2_";
+		else if (opt == 2) file += "opt2_";
+		else file += "opt4_";
 		file +=  (to_string(n) + ".txt");
-
 		ofstream output(file);
-		for(float i = 0.001f; i <= 1.0f; i += 0.001f){
+		for(float i = (opt == 2)? 0.001f:0.000f; i <= 1.0f; i += 0.001f){
 			output << i << " ";
 			float res;
 			float connect_c;
+			float max_cc;
 			if(not b){
-				b = Statistic_test(test_value[n], i, ermon,res, connect_c);
+				b = Statistic_test(test_value[n], i, ermon,res, connect_c,max_cc);
 				if(opt == 1) output << res;
-				else output << connect_c;
+				else if(opt == 2) output << connect_c;
+				else output << max_cc;
 			}
-			else output << 1;
+			else {
+				if(opt != 4) output << 1;
+				else output << test_value[n];
+			}
 			output << endl;
 		}
 	}
@@ -196,7 +203,7 @@ void get_statistic_Edges_Connexed_file(bool ermon) {
 	
 	for (int i = 0; i <= 5; i += 1) {
 		int max_Edge_number = (test_value[i]*(test_value[i]-1))/2;
-		for (float j = 0.1f; j < 1.1f; j += 0.1f) {
+		for (float j = 0.0f; j < 1.1f; j += 0.1f) {
 			bool b = false;
 			string file =  to_string(test_value[i]) + " with p = " + to_string(j) + ".txt";
 			ofstream output(file);
@@ -244,6 +251,7 @@ int main () {
 				cout << "1) probability of the graph being connected" << endl;
 				cout << "2) number of waiting connected components of a graph" << endl;
 				cout << "3) relationship beetwen number of edges and connectivity" << endl;
+				cout << "4) waiting maximum connected component size" << endl;
 				int i;
 				cin >> i;
 				if(i == 3) get_statistic_Edges_Connexed_file(b);
