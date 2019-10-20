@@ -162,7 +162,7 @@ for (val in list_of_files){
 legend("bottomright", legend = leg, col = colo, lty = 2, cex = 1)
 
 
-#GNP relation between probability r and probability of the network being hamiltonian
+#RGG relation between probability r and probability of the network being hamiltonian
 
 list_of_files <- list.files(path = "./", recursive = TRUE, patter = "^rgg_opt5_.*\\.txt$")
 colo = vector()
