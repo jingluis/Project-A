@@ -66,6 +66,12 @@ void switch_(int& x, int& y) {
 	y = c;
 }
 
+/*
+	Given an path P = (x1, x2, x3,..., xj) and a position i, 1 < i < j, this function
+	will rotate this path and let xi be the new end point.
+	P' = (x1, x2,...xj, xj-1,...., xi-1, xi)
+*/
+
 void rotate(vector<int>& Path, int rotPos) {
 	int size = Path.size();
 	int numswitch = (size - rotPos)/2;
@@ -73,6 +79,11 @@ void rotate(vector<int>& Path, int rotPos) {
 		switch_(Path[rotPos+i], Path[size-i]);
 	}
 }
+
+/*
+	Given an path P = (x1, x2, x3,....,xj), this function will reverse this Path.
+	P' = (xj, xj-1,....x3, x2, x1)
+*/
 
 void reverse(vector<int>& Path) {
 	int size = Path.size();
@@ -82,6 +93,11 @@ void reverse(vector<int>& Path) {
 		switch_(Path[i], Path[size-i]);
 	}
 }
+
+/*
+	given an vertex V, this function returns an vertex V' which is not previously
+	visited by V.
+*/
 
 int choose_random_unvisited_vertex(vector<int>& adjacency, int pHead) {
 	int unvisited = adjacency[adjacency.size()-1];
@@ -97,6 +113,11 @@ int choose_random_unvisited_vertex(vector<int>& adjacency, int pHead) {
 	}
 }
 
+/*
+	given an vertex V, this function returns an vertex V' which is previously
+	visited by V.
+*/
+
 int choose_random_visited_vertex(vector<int>& adjacency, int k) {
 	int prob = rand()%k+1;
 	int aux = 0;
@@ -108,6 +129,11 @@ int choose_random_visited_vertex(vector<int>& adjacency, int k) {
 		}
 	}
 }
+
+/*
+	given an vertex V, this function returns the number of the vertexs that was 
+	visited by V.
+*/
 
 int visited_vertex_num(vector<int>& adjacency) {
 	int k = 0;
