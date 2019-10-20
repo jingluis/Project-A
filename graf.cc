@@ -359,11 +359,11 @@ bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect
 		graph g_test;
 		graph adjacency(numVert, vector<int>(numVert+1, 0));
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, adjacency);
-		else g_test = random_geometric_graph(numVert, p, adjacency);
+		else g_test = random_geometric_graph(numVert, p, adjacency, 2, 2.0, false, 0);
 		graph component;
 		max_cc_s += max_connex_components(g_test, component);
 		connexed_components += component.size();
-		connexed += (component.size() == 1);
+		if (is_graph_connexed(g_test)) ++connexed;
 	}
 	/*cout << "El graf aleatori generat amb " << numVert << " vertexs i amb una p = " << p << " te en mitjana:\n";
 	cout <<	"possibilitat de ser conex = " << float(connexed)/100.0 << "\ncomponents conexos esperat = " << float(connexed_components)/100.0 << "\n\n";*/
@@ -385,7 +385,7 @@ bool Statistic_is_Hamiltonian_GNP(int numVert, float r, float& res) {
 		hamiltonian += has_hamiltonian_cycle(g_test, adjacency);
 		g = adjacency;
 	}
-	res = float(hamiltonian)/1000;
+	res = float(hamiltonian)/1000.0;
 	return res == 1;
 }
 
@@ -395,11 +395,11 @@ bool Statistic_is_Hamiltonian_RGG(int numVert, float r, float& res) {
 	for (int i = 0; i < 1000; ++i) {
 		graph g_test;
 		graph adjacency(numVert, vector<int> (numVert+1, 0));
-		g_test = random_geometric_graph(numVert, r, adjacency);
+		g_test = random_geometric_graph(numVert, r, adjacency, 2, 2.0, false, 0);
 		hamiltonian += has_hamiltonian_cycle(g_test, adjacency);
 		g = adjacency;
 	}
-	res = float(hamiltonian)/1000;
+	res = float(hamiltonian)/1000.0;
 	return res == 1;
 }
 
@@ -431,7 +431,7 @@ void get_statistic_Hamiltonian_RGG_file() {
 			float res;
 			output << j << " ";
 			if (not b) {
-				b = Statistic_is_Hamiltonian_GNP(test_value[i], j, res);
+				b = Statistic_is_Hamiltonian_RGG(test_value[i], j, res);
 				output << res << endl;
  			}
 			else output << 1 << endl;
