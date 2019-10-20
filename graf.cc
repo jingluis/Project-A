@@ -271,7 +271,8 @@ void RGG_test () {
 	cout << "Introduce the radius: ";
 	cin >> radius;
 	graph g_test;
-	g_test = random_geometric_graph(numVert, radius);
+	graph adjacency(numVert, vector<int> (numVert+1, 0));
+	g_test = random_geometric_graph(numVert, radius, adjacency);
 	cout << "\n\nAdjacency List\n\n";
 	int i = 0;
 	for (vector<int> v : g_test) {
@@ -307,7 +308,7 @@ bool Statistic_Edges_Connexed(int numVert, int numEdge, float p, bool ermon, flo
 		graph g_test;
 		graph adjacency(numVert, vector<int>(numVert+1, 0));
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, adjacency, true, numEdge);
-		else g_test = random_geometric_graph(numVert, p, 2, 2.0, true, numEdge);
+		else g_test = random_geometric_graph(numVert, p, adjacency, 2, 2.0, true, numEdge);
 		vector<int> partial_res;
 		vector<bool> visited(numVert, false);
 		int aux = 0;
@@ -332,7 +333,7 @@ bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect
 		graph g_test;
 		graph adjacency(numVert, vector<int>(numVert+1, 0));
 		if (ermon) g_test = erdos_renyi_random_graph(numVert, p, adjacency);
-		else g_test = random_geometric_graph(numVert, p);
+		else g_test = random_geometric_graph(numVert, p, adjacency);
 		graph component;
 		max_cc_s += max_connex_components(g_test, component);
 		connexed_components += component.size();
@@ -351,18 +352,30 @@ bool Statistic_test(int numVert, float p, bool ermon, float& res, float& connect
 bool Statistic_is_Hamiltonian_GNP(int numVert, float r, float& res) {
 	int hamiltonian = 0;
 	graph g;
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < 1000; ++i) {
 		graph g_test;
 		graph adjacency(numVert, vector<int> (numVert+1, 0));
 		g_test = erdos_renyi_random_graph(numVert, r, adjacency);
 		hamiltonian += has_hamiltonian_cycle(g_test, adjacency);
 		g = adjacency;
 	}
-	res = float(hamiltonian)/100;
+	res = float(hamiltonian)/1000;
 	return res == 1;
 }
 
-
+bool Statistic_is_Hamiltonian_RGG(int numVert, float r, float& res) {
+	int hamiltonian = 0;
+	graph g;
+	for (int i = 0; i < 1000; ++i) {
+		graph g_test;
+		graph adjacency(numVert, vector<int> (numVert+1, 0));
+		g_test = random_geometric_graph(numVert, r, adjacency);
+		hamiltonian += has_hamiltonian_cycle(g_test, adjacency);
+		g = adjacency;
+	}
+	res = float(hamiltonian)/1000;
+	return res == 1;
+}
 
 void get_statistic_Hamiltonian_GNP_file() {
 
@@ -382,6 +395,23 @@ void get_statistic_Hamiltonian_GNP_file() {
 	}
 }
 
+void get_statistic_Hamiltonian_RGG_file() {
+
+	for (int i = 0; i <= 5; i += 1) {
+		bool b = false;
+		string file = "rgg_opt5_" +to_string(i) + ".txt";
+		ofstream output(file);
+		for (float j = 0.001f; j < 1.1f; j += 0.001f) {
+			float res;
+			output << j << " ";
+			if (not b) {
+				b = Statistic_is_Hamiltonian_GNP(test_value[i], j, res);
+				output << res << endl;
+ 			}
+			else output << 1 << endl;
+		}
+	}
+}
 
 /* 
 	 stores the result in files of the statistic tests for graphs with c(10,50,100,250,500,1000) vertexs, ermon indicates if the graph is gnp or rgg
@@ -480,11 +510,12 @@ int main () {
 				cout << "2) number of waiting connected components of a graph" << endl;
 				cout << "3) relationship beetwen number of edges and connectivity" << endl;
 				cout << "4) waiting maximum connected component size" << endl;
-				if (b) cout << "5) relationship beetwen the possibility to have an hamiltonian cycle and p" << endl;
+				cout << "5) possibility of the graph being hamiltonian" << endl;
 				int i;
 				cin >> i;
 				if(i == 3) get_statistic_Edges_Connexed_file(b);
 				else if (b and i == 5) get_statistic_Hamiltonian_GNP_file();
+				else if (!b and i == 5) get_statistic_Hamiltonian_RGG_file();
 				else get_statistic_data_file(b, i);
 				cout << "Statistic data collected correctly" << endl;
 				break;
