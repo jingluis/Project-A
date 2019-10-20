@@ -83,13 +83,17 @@ graph erdos_renyi_random_graph(int n, double p, graph&adjacency, bool edge_fixed
   using Minkowski distance metric 'p'
   Works 'O(n^2)' time
 */
-void slow_edges(graph& G, const vector <vector<double>>& pos, double radius, double p, int dim, bool edge_fixed, int Edges){
+void slow_edges(graph& G, const vector <vector<double>>& pos, double radius, graph& adjacency, double p, int dim, bool edge_fixed, int Edges){
 	if (!edge_fixed) {
 		for(int i = 0; i < pos.size(); ++i){
 			for(int j = i + 1; j < pos.size(); ++j){
 				double sum = 0.0;
 				for(int k = 0; k < dim; ++k) sum += pow(pos[i][k] - pos[j][k], p);
 				if(sum <= pow(radius, p)){
+					adjacency[i][j] = 1;
+					adjacency[j][i] = 1;
+					++adjacency[i][adjacency.size()];
+					++adjacency[j][adjacency.size()];
 					G[i].push_back(j);
 					G[j].push_back(i);
 				}
@@ -152,7 +156,7 @@ void slow_edges(graph& G, const vector <vector<double>>& pos, double radius, dou
   Graph
       A random geometric graph, undirected and without self-loops.
 */
-graph random_geometric_graph(int n, double radius, int dim, double p, bool edge_fixed, int Edges){
+graph random_geometric_graph(int n, double radius, graph& adjacency, int dim, double p, bool edge_fixed, int Edges){
 	int n_name = n;
 	graph G(n);
 	if(radius == 0) return G;
@@ -162,6 +166,6 @@ graph random_geometric_graph(int n, double radius, int dim, double p, bool edge_
 		for(int j = 0; j < dim; ++j) pos_aux.push_back((rand()%100/(double)100));
 		pos[i] = pos_aux;
 	}
-	slow_edges(G, pos, radius, p, dim, edge_fixed, Edges);
+	slow_edges(G, pos, radius, adjacency, p, dim, edge_fixed, Edges);
 	return G;
 }
