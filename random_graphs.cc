@@ -39,7 +39,7 @@ graph complete_graph(int n){
     This algorithm [2]_ runs in $O(n^2)$ time.  
 */
 
-graph erdos_renyi_random_graph(int n, double p, bool edge_fixed, int Edges){
+graph erdos_renyi_random_graph(int n, double p, graph&adjacency, bool edge_fixed, int Edges){
 	graph res(n);
 	if(p <= 0.0) return res;
 	if(p >= 1.0) return complete_graph(n);
@@ -49,6 +49,10 @@ graph erdos_renyi_random_graph(int n, double p, bool edge_fixed, int Edges){
 				if((rand()%100/(double)100) < p){
 					res[i].push_back(j);
 					res[j].push_back(i);
+					adjacency[i][j] = 1;
+					adjacency[j][i] = 1;
+					++adjacency[i][adjacency.size()];
+					++adjacency[j][adjacency.size()];
 				}
 			}
 		}
